@@ -43,8 +43,19 @@ room['treasure'].s_to = room['narrow']
 indiana = Player('Indiana Jones')
 indiana.current_room = room['outside']
 
+
 necklace = Item('necklace', 'a sparkly string of interesting gems')
-print(necklace)
+ring = Item('ring', 'engraved in an unknown language')
+broom = Item('broom', 'falling apart from much use')
+spider = Item('spider', 'a long-legged fuzzy creature')
+candle = Item('candle', 'almost burnt down to nothing')
+
+room['outside'].add_item(broom)
+room['outside'].add_item(candle)
+room['treasure'].add_item(spider)
+room['foyer'].add_item(ring)
+room['foyer'].add_item(necklace)
+
 
 '''
 # Write a loop that:
@@ -63,38 +74,60 @@ directions = {
     'n': 'north',
     's': 'south',
     'e': 'east',
-    'w': 'west'
+    'w': 'west',
+    'q': 'home'
 }
+
+
+def move_error(action):
+    return f"{indiana.name} can't go {directions[action]}. Make another choice."
+
+
+def print_items(room):
+    index = 1
+    if len(room.items) > 0:
+        print(f'In {room.name}: ')
+    for item in room.items:
+        print(f'\t {index}. {item}')
+        index += 1
+    print('\n')
+
 
 inPlay = True
 while inPlay:
     print(indiana)
+    print_items(indiana.current_room)
     action = input(
         f'Choose one: [n] go north, [s] go south, [e] go east, [w] go west, [q] quit.\n')
-    print(f'\n{indiana.name} goes {directions[action]}.')
+
+    if action not in directions.keys():
+        print(f'{action} is an invalid choice. Try again.')
+    else:
+        print(f'\n{indiana.name} wants to go {directions[action]}.')
+
     if action == 'n':
         if indiana.current_room.n_to != '':
             indiana.current_room = indiana.current_room.n_to
         else:
-            print(
-                f"{indiana.name} can't go {directions[action]}. Make another choice.")
+            print(move_error(action))
+
     elif action == 's':
         if indiana.current_room.s_to != '':
             indiana.current_room = indiana.current_room.s_to
         else:
-            print(
-                f"{indiana.name} can't go {directions[action]}. Make another choice.")
+            print(move_error(action))
+
     elif action == 'e':
         if indiana.current_room.e_to != '':
             indiana.current_room = indiana.current_room.e_to
         else:
-            print(
-                f"{indiana.name} can't go {directions[action]}. Make another choice.")
+            print(move_error(action))
+
     elif action == 'w':
         if indiana.current_room.w_to != '':
             indiana.current_room = indiana.current_room.w_to
         else:
-            print(
-                f"{indiana.name} can't go {directions[action]}. Make another choice.")
+            print(move_error(action))
+
     elif action == 'q':
         inPlay = False
