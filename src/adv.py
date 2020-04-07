@@ -1,11 +1,12 @@
 from room import Room
 from player import Player
+from item import Item
 
 # Declare all the rooms
 
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons"),
+                     "North of you, the cave mount beckons."),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
 passages run north and east."""),
@@ -41,7 +42,9 @@ room['treasure'].s_to = room['narrow']
 # Make a new player object that is currently in the 'outside' room.
 indiana = Player('Indiana Jones')
 indiana.current_room = room['outside']
-print(indiana)
+
+necklace = Item('necklace', 'a sparkly string of interesting gems')
+print(necklace)
 
 '''
 # Write a loop that:
@@ -56,18 +59,42 @@ print(indiana)
 #
 # If the user enters "q", quit the game.
 '''
+directions = {
+    'n': 'north',
+    's': 'south',
+    'e': 'east',
+    'w': 'west'
+}
+
 inPlay = True
 while inPlay:
     print(indiana)
     action = input(
         f'Choose one: [n] go north, [s] go south, [e] go east, [w] go west, [q] quit.\n')
+    print(f'\n{indiana.name} goes {directions[action]}.')
     if action == 'n':
-        print('Go north')
+        if indiana.current_room.n_to != '':
+            indiana.current_room = indiana.current_room.n_to
+        else:
+            print(
+                f"{indiana.name} can't go {directions[action]}. Make another choice.")
     elif action == 's':
-        print('Go south')
+        if indiana.current_room.s_to != '':
+            indiana.current_room = indiana.current_room.s_to
+        else:
+            print(
+                f"{indiana.name} can't go {directions[action]}. Make another choice.")
     elif action == 'e':
-        print('Go east')
+        if indiana.current_room.e_to != '':
+            indiana.current_room = indiana.current_room.e_to
+        else:
+            print(
+                f"{indiana.name} can't go {directions[action]}. Make another choice.")
     elif action == 'w':
-        print('Go west')
+        if indiana.current_room.w_to != '':
+            indiana.current_room = indiana.current_room.w_to
+        else:
+            print(
+                f"{indiana.name} can't go {directions[action]}. Make another choice.")
     elif action == 'q':
         inPlay = False
