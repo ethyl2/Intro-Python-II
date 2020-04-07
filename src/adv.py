@@ -1,4 +1,5 @@
 from room import Room
+from player import Player
 
 # Declare all the rooms
 
@@ -38,14 +39,35 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
+indiana = Player('Indiana Jones')
+indiana.current_room = room['outside']
+print(indiana)
 
+'''
 # Write a loop that:
 #
 # * Prints the current room name
 # * Prints the current description (the textwrap module might be useful here).
 # * Waits for user input and decides what to do.
+# Valid commands are n, s, e and w which move the player North, South, East or West
 #
 # If the user enters a cardinal direction, attempt to move to the room there.
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+'''
+inPlay = True
+while inPlay:
+    print(indiana)
+    action = input(
+        f'Choose one: [n] go north, [s] go south, [e] go east, [w] go west, [q] quit.\n')
+    if action == 'n':
+        print('Go north')
+    elif action == 's':
+        print('Go south')
+    elif action == 'e':
+        print('Go east')
+    elif action == 'w':
+        print('Go west')
+    elif action == 'q':
+        inPlay = False
