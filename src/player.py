@@ -21,3 +21,13 @@ class Player:
 
     def add_item(self, item):
         self.items.append(item)
+
+    def remove_item(self, item):
+        self.items.remove(item)
+
+    def print_items(self):
+        print(f'Current inventory of {self.name}:')
+        index = 1
+        for item in self.items:
+            print(f'\t{index}. {item.name}')
+            index += 1

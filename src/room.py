@@ -44,7 +44,7 @@ class Room:
     def print_items(self):
         index = 1
         if len(self.items) > 0:
-            print(f'In {self.name}: ')
+            print(f'Items in {self.name}: ')
         for item in self.items:
             print(f'\t {index}. {item}')
             index += 1

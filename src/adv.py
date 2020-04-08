@@ -75,7 +75,9 @@ directions = {
     's': 'south',
     'e': 'east',
     'w': 'west',
-    'q': 'home'
+    'q': 'home',
+    'i': 'look in the inventory',
+    'inventory': 'look in the inventory'
 }
 
 
@@ -91,6 +93,10 @@ If the user enters get or take followed by an Item name, look at the contents of
 If it is there, remove it from the Room contents, and add it to the Player contents.
 
 If it's not there, print an error message telling the user so.
+
+---------
+
+Implement support for the verb drop followed by an Item name. This is the opposite of get/take.
 '''
 
 
@@ -106,7 +112,7 @@ while inPlay:
     print(indiana)
     indiana.current_room.print_items()
     action = input(
-        f"Choose one: [n] go north, [s] go south, [e] go east, [w] go west, [q] quit OR get an item by typing 'get [item]'.\n")
+        f"Choose one: go [n] north, [s] south, [e] east, [w] west, [i] show inventory, [q] quit OR type 'get [item]' OR 'drop [item]'.\n")
 
     action_split = action.split(' ')
     if len(action_split) == 2:
@@ -121,6 +127,17 @@ while inPlay:
             else:
                 print(
                     f'{action_split[1]} is not found in the {indiana.current_room.name}. Try again.')
+        elif action_split[0] == 'drop':
+            matches = [
+                x for x in indiana.items if x.name == action_split[1]]
+            if len(matches) > 0:
+                indiana.current_room.add_item(matches[0])
+                indiana.remove_item(matches[0])
+                matches[0].on_drop(indiana.name, 'has')
+            else:
+                print(
+                    f'{action_split[1]} is not found in the inventory of {indiana.name}. Try again.')
+
         else:
             print(f'{action_split[0]} is not a valid action. Try again.')
     else:
@@ -153,6 +170,9 @@ while inPlay:
             indiana.current_room = indiana.current_room.w_to
         else:
             print(move_error(action))
+
+    elif action == 'i' or action == 'inventory':
+        indiana.print_items()
 
     elif action == 'q':
         inPlay = False
