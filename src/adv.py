@@ -9,7 +9,7 @@ room = {
                      "North of you, the cave mount beckons."),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
-passages run north and east."""),
+passages run north, east, and west."""),
 
     'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
 into the darkness. Ahead to the north, a light flickers in
@@ -21,6 +21,18 @@ to north. The smell of gold permeates the air."""),
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
 chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
+
+    'lake_room': Room("Underground Lake Chamber", """In the middle of the large chamber is
+a deep, dark lake. If you hug the edges of the room as you walk, you should be able to make it 
+across the chamber. If not, it's time to swim! The chamber has a exit to the west and north."""),
+
+    'bone_pit': Room("Pit of Bones", """This depressing room is littered with scattered bones.
+Looks like a dead end, in more ways than one."""),
+
+    'cathedral': Room("Grand Cathedral", """The ceiling soars high above you. Inside this cavern 
+are some of the most beautiful formations you've ever seen, including a large stalagmite forest 
+and a 'frozen' waterfall. You gaze in awe for a while; unfortunately, it looks like the only way 
+out is the way you came in.""")
 }
 
 
@@ -30,10 +42,16 @@ room['outside'].n_to = room['foyer']
 room['foyer'].s_to = room['outside']
 room['foyer'].n_to = room['overlook']
 room['foyer'].e_to = room['narrow']
+room['foyer'].w_to = room['lake_room']
 room['overlook'].s_to = room['foyer']
 room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
+room['lake_room'].e_to = room['foyer']
+room['lake_room'].w_to = room['bone_pit']
+room['lake_room'].n_to = room['cathedral']
+room['bone_pit'].e_to = room['lake_room']
+room['cathedral'].s_to = room['lake_room']
 
 #
 # Main
