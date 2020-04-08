@@ -16,11 +16,17 @@ that are currently in that room.
 
 Add functionality to the main loop that prints out all the 
 items that are visible to the player when they are in that room.
+
+---
+
+Add an attribute to Room called is_light that is True if the Room 
+is naturally illuminated, or False if a LightSource is required to 
+see what is in the room.
 """
 
 
 class Room:
-    def __init__(self, name, description):
+    def __init__(self, name, description, is_light=False):
         self.name = name
         self.description = description
         self.n_to = ''
@@ -28,6 +34,7 @@ class Room:
         self.e_to = ''
         self.w_to = ''
         self.items = []
+        self.is_light = is_light
 
     def __str__(self):
         if len(self.items) > 0:

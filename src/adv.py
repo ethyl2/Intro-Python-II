@@ -6,33 +6,33 @@ from item import Item, LightSource
 
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons."),
+                     "North of you, the cave mount beckons.", True),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
-passages run north, east, and west."""),
+passages run north, east, and west.""", True),
 
     'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
 into the darkness. Ahead to the north, a light flickers in
-the distance, but there is no way across the chasm."""),
+the distance, but there is no way across the chasm.""", True),
 
     'narrow':   Room("Narrow Passage", """The narrow passage bends here from west
-to north. The smell of gold permeates the air."""),
+to north. The smell of gold permeates the air.""", False),
 
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
 chamber! Sadly, it has already been completely emptied by
-earlier adventurers. The only exit is to the south."""),
+earlier adventurers. The only exit is to the south.""", False),
 
     'lake_room': Room("Underground Lake Chamber", """In the middle of the large chamber is
 a deep, dark lake. If you hug the edges of the room as you walk, you should be able to make it 
-across the chamber. If not, it's time to swim! The chamber has a exit to the west and north."""),
+across the chamber. If not, it's time to swim! The chamber has a exit to the west and north.""", False),
 
     'bone_pit': Room("Pit of Bones", """This depressing room is littered with scattered bones.
-Looks like a dead end, in more ways than one."""),
+Looks like a dead end, in more ways than one.""", False),
 
-    'cathedral': Room("Grand Cathedral", """The ceiling soars high above you. Inside this cavern 
-are some of the most beautiful formations you've ever seen, including a large stalagmite forest 
-and a 'frozen' waterfall. You gaze in awe for a while; unfortunately, it looks like the only way 
-out is the way you came in.""")
+    'cathedral': Room("Grand Cathedral", """The ceiling soars high above you. A few skylights let in
+a few distinct rays of light. Inside this cavern are some of the most beautiful formations you've ever 
+seen, including a large stalagmite forest and a 'frozen' waterfall. You gaze in awe for a while; 
+unfortunately, it looks like the only practical way out is the way you came in.""", True)
 }
 
 
@@ -66,8 +66,10 @@ necklace = Item('necklace', 'a sparkly string of interesting gems')
 ring = Item('ring', 'engraved in an unknown language')
 broom = Item('broom', 'falling apart from much use')
 spider = Item('spider', 'a long-legged fuzzy creature')
-candle = Item('candle', 'almost burnt down to nothing')
+candle = LightSource('candle', 'almost burnt down to nothing')
 lantern = LightSource('lantern', 'handy for exploring dark places')
+flashlight = LightSource(
+    'flashlight', 'luckily for you, still has working batteries')
 
 room['outside'].add_item(broom)
 room['outside'].add_item(candle)
@@ -75,6 +77,7 @@ room['treasure'].add_item(spider)
 room['foyer'].add_item(ring)
 room['foyer'].add_item(necklace)
 room['lake_room'].add_item(lantern)
+room['overlook'].add_item(flashlight)
 
 
 '''
@@ -127,10 +130,38 @@ def contains(list, filter):
     return False
 
 
+"""
+Modify the main loop to test if there is light in the Room 
+(i.e. if is_light is True or there is a LightSource item in the Room's contents 
+or if there is a LightSource item in the Player's contents).
+
+Hint: isinstance might help you figure out if there's a LightSource among all the nearby Items.
+"""
+
+
+def light_check(room, player):
+    has_light = False
+    if room.is_light == True or len([
+            x for x in room.items if isinstance(x, LightSource)]) > 0 or len([
+            x for x in player.items if isinstance(x, LightSource)]) > 0:
+        has_light = True
+    '''
+    else:
+        light_sources = [
+            x for x in room.items if isinstance(x, LightSource)]
+        if len(light_sources) > 0:
+            has_light = True
+    '''
+    return has_light
+
+
 inPlay = True
 while inPlay:
-    print(indiana)
-    indiana.current_room.print_items()
+    if light_check(indiana.current_room, indiana):
+        print(indiana)
+        indiana.current_room.print_items()
+    else:
+        print("It's pitch black!")
     action = input(
         f"Choose one: go [n] north, [s] south, [e] east, [w] west, [i] show inventory, [q] quit OR type 'get [item]' OR 'drop [item]'.\n")
 
