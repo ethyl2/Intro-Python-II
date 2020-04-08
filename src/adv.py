@@ -96,6 +96,7 @@ room['bone_pit'].add_item(dagger)
 room['cathedral'].add_item(pick)
 
 """Add Riddles"""
+
 room['lake_room'].add_question(
     'I live in the water, but never get wet. What am I? (in one word)')
 room['lake_room'].add_answer('reflection')
@@ -127,6 +128,12 @@ room['foyer'].add_answer('wrong')
 room['outside'].add_question(
     "What gets bigger and bigger the more you take away from it? (one word)")
 room['outside'].add_answer('hole')
+
+"""Game over message"""
+
+
+def end_game(player):
+    print(f"{player.name} ends the adventure with {player.score} point(s) and {len(player.items)} item(s).")
 
 
 '''
@@ -211,7 +218,7 @@ while inPlay:
         print("\033[1;36;40m It's pitch black!")
     indiana.current_room.print_question()
     action = input(
-        f"\033[0;35;40m Choose one: go [n] north, [s] south, [e] east, [w] west, [i] show inventory, [q] quit OR type 'get [item]' OR 'drop [item]'.\n \033[m")
+        f"\033[0;35;40m Choose one: go [n] north, [s] south, [e] east, [w] west, [i] show inventory, [q] quit OR type 'get [item]', 'drop [item]', 'say [answer]'.\n \033[m")
 
     action_split = action.split(' ')
     if len(action_split) == 2:
@@ -238,6 +245,13 @@ while inPlay:
             else:
                 print(
                     f'\033[1;31;40m {action_split[1]} is not found in the inventory of {indiana.name}. Try again.')
+
+        elif action_split[0] == 'say':
+            if action_split[1] == indiana.current_room.answer:
+                print(f'{action_split[1]} is correct!')
+                indiana.increase_score()
+            else:
+                print(f'Sorry, {action_split[1]} is not correct.')
 
         else:
             print(
@@ -278,4 +292,5 @@ while inPlay:
         indiana.print_items()
 
     elif action == 'q':
+        end_game(indiana)
         inPlay = False
