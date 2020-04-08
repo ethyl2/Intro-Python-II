@@ -15,6 +15,7 @@ class Player:
         self.name = name
         self.current_room = ''
         self.items = []
+        self.score = 0
 
     def __str__(self):
         return f'\033[0;32;40m {self.name} is in the {self.current_room}\n'
@@ -31,3 +32,7 @@ class Player:
         for item in self.items:
             print(f'\033[1;36;40m \t{index}. {item.name}, {item.description}')
             index += 1
+
+    def increase_score(self):
+        self.score += 1
+        print(f"Score: {self.score}")

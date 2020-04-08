@@ -35,6 +35,8 @@ class Room:
         self.w_to = ''
         self.items = []
         self.is_light = is_light
+        self.question = ''
+        self.answer = ''
 
     def __str__(self):
         if len(self.items) > 0:
@@ -56,3 +58,12 @@ class Room:
             print(f'\t {index}. {item}')
             index += 1
         print('\n')
+
+    def add_question(self, question):
+        self.question = question
+
+    def add_answer(self, answer):
+        self.answer = answer
+
+    def print_question(self):
+        print(f"\033[1;37;40m A deep voices asks, '{self.question}' \033[m")

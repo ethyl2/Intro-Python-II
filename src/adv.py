@@ -61,6 +61,9 @@ room['cathedral'].s_to = room['lake_room']
 indiana = Player('Indiana Jones')
 indiana.current_room = room['outside']
 
+"""Items"""
+
+# Regular Items
 
 necklace = Item('necklace', '📿 a sparkly string of interesting gems')
 ring = Item('ring', '💍 engraved in an unknown language')
@@ -72,10 +75,14 @@ dagger = Item(
 pick = Item(
     'pick', '⛏️  a tool with a curved spike for breaking up rocks in mining')
 
+# LightSources
+
 candle = LightSource('candle', '🕯️ almost burnt down to nothing')
 lantern = LightSource('lantern', '🏮 handy for exploring dark places')
 flashlight = LightSource(
     'flashlight', '🔦 luckily for you, still has working 🔋 batteries')
+
+"""Add Items to Rooms"""
 
 room['outside'].add_item(broom)
 room['outside'].add_item(candle)
@@ -87,6 +94,39 @@ room['overlook'].add_item(flashlight)
 room['cathedral'].add_item(coins)
 room['bone_pit'].add_item(dagger)
 room['cathedral'].add_item(pick)
+
+"""Add Riddles"""
+room['lake_room'].add_question(
+    'I live in the water, but never get wet. What am I? (in one word)')
+room['lake_room'].add_answer('reflection')
+
+room['treasure'].add_question(
+    "If you have me, you want to share me. If you share me, you haven't got me. What am I? (in one word)")
+room['treasure'].add_answer('secret')
+
+room['narrow'].add_question(
+    "I can travel around the world while staying in a corner. What am I? (in one word)")
+room['narrow'].add_answer('stamp')
+
+room['bone_pit'].add_question(
+    "I am easy to get into, but hard to get out of. What am I? (in one word)")
+room['bone_pit'].add_answer('trouble')
+
+room['overlook'].add_question(
+    "I fly without wings and cry without eyes. What am I? (in one word)")
+room['overlook'].add_answer('cloud')
+
+room['cathedral'].add_question("""I am a ship that can be made to ride the greatest waves. 
+I am not built by tool, but built by hearts and minds. What am I? (in one word)""")
+room['cathedral'].add_answer('friendship')
+
+room['foyer'].add_question(
+    "What word is spelled wrong in all the dictionaries?")
+room['foyer'].add_answer('wrong')
+
+room['outside'].add_question(
+    "What gets bigger and bigger the more you take away from it? (one word)")
+room['outside'].add_answer('hole')
 
 
 '''
@@ -169,6 +209,7 @@ while inPlay:
         indiana.current_room.print_items()
     else:
         print("\033[1;36;40m It's pitch black!")
+    indiana.current_room.print_question()
     action = input(
         f"\033[0;35;40m Choose one: go [n] north, [s] south, [e] east, [w] west, [i] show inventory, [q] quit OR type 'get [item]' OR 'drop [item]'.\n \033[m")
 
