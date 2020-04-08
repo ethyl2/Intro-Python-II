@@ -83,27 +83,52 @@ def move_error(action):
     return f"{indiana.name} can't go {directions[action]}. Make another choice."
 
 
-def print_items(room):
-    index = 1
-    if len(room.items) > 0:
-        print(f'In {room.name}: ')
-    for item in room.items:
-        print(f'\t {index}. {item}')
-        index += 1
-    print('\n')
+'''
+Implement support for the verb get followed by an Item name. This will be used to pick up Items.
+
+If the user enters get or take followed by an Item name, look at the contents of the current Room to see if the item is there.
+
+If it is there, remove it from the Room contents, and add it to the Player contents.
+
+If it's not there, print an error message telling the user so.
+'''
+
+
+def contains(list, filter):
+    for x in list:
+        if filter(x):
+            return True
+    return False
 
 
 inPlay = True
 while inPlay:
     print(indiana)
-    print_items(indiana.current_room)
+    indiana.current_room.print_items()
     action = input(
-        f'Choose one: [n] go north, [s] go south, [e] go east, [w] go west, [q] quit.\n')
+        f"Choose one: [n] go north, [s] go south, [e] go east, [w] go west, [q] quit OR get an item by typing 'get [item]'.\n")
 
-    if action not in directions.keys():
-        print(f'{action} is an invalid choice. Try again.')
+    action_split = action.split(' ')
+    if len(action_split) == 2:
+        if action_split[0] == 'get' or action_split[0] == 'take':
+            matches = [
+                x for x in indiana.current_room.items if x.name == action_split[1]]
+
+            if len(matches) > 0:
+                indiana.current_room.remove_item(matches[0])
+                indiana.add_item(matches[0])
+                matches[0].on_take(indiana.name, 'has')
+            else:
+                print(
+                    f'{action_split[1]} is not found in the {indiana.current_room.name}. Try again.')
+        else:
+            print(f'{action_split[0]} is not a valid action. Try again.')
     else:
-        print(f'\n{indiana.name} wants to go {directions[action]}.')
+
+        if action not in directions.keys():
+            print(f'{action} is an invalid choice. Try again.')
+        else:
+            print(f'\n{indiana.name} wants to go {directions[action]}.')
 
     if action == 'n':
         if indiana.current_room.n_to != '':
