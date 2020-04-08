@@ -1,6 +1,6 @@
 from room import Room
 from player import Player
-from item import Item
+from item import Item, LightSource
 
 # Declare all the rooms
 
@@ -67,12 +67,14 @@ ring = Item('ring', 'engraved in an unknown language')
 broom = Item('broom', 'falling apart from much use')
 spider = Item('spider', 'a long-legged fuzzy creature')
 candle = Item('candle', 'almost burnt down to nothing')
+lantern = LightSource('lantern', 'handy for exploring dark places')
 
 room['outside'].add_item(broom)
 room['outside'].add_item(candle)
 room['treasure'].add_item(spider)
 room['foyer'].add_item(ring)
 room['foyer'].add_item(necklace)
+room['lake_room'].add_item(lantern)
 
 
 '''
