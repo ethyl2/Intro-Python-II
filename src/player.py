@@ -29,5 +29,5 @@ class Player:
         print(f'Current inventory of {self.name}:')
         index = 1
         for item in self.items:
-            print(f'\033[1;36;40m \t{index}. {item.name}')
+            print(f'\033[1;36;40m \t{index}. {item.name}, {item.description}')
             index += 1

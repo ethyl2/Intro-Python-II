@@ -62,14 +62,20 @@ indiana = Player('Indiana Jones')
 indiana.current_room = room['outside']
 
 
-necklace = Item('necklace', 'a sparkly string of interesting gems')
-ring = Item('ring', 'engraved in an unknown language')
-broom = Item('broom', 'falling apart from much use')
-spider = Item('spider', 'a long-legged fuzzy creature')
-candle = LightSource('candle', 'almost burnt down to nothing')
-lantern = LightSource('lantern', 'handy for exploring dark places')
+necklace = Item('necklace', '📿 a sparkly string of interesting gems')
+ring = Item('ring', '💍 engraved in an unknown language')
+broom = Item('broom', '🧹 falling apart from much use')
+spider = Item('spider', '🕷️  a long-legged fuzzy creature')
+coins = Item('coins', '💰 contained in a convenient bag')
+dagger = Item(
+    'dagger', '🗡️  a pointed knife with a steel blade, handy for thrusting in close combat')
+pick = Item(
+    'pick', '⛏️  a tool with a curved spike for breaking up rocks in mining')
+
+candle = LightSource('candle', '🕯️ almost burnt down to nothing')
+lantern = LightSource('lantern', '🏮 handy for exploring dark places')
 flashlight = LightSource(
-    'flashlight', 'luckily for you, still has working batteries')
+    'flashlight', '🔦 luckily for you, still has working 🔋 batteries')
 
 room['outside'].add_item(broom)
 room['outside'].add_item(candle)
@@ -78,6 +84,9 @@ room['foyer'].add_item(ring)
 room['foyer'].add_item(necklace)
 room['lake_room'].add_item(lantern)
 room['overlook'].add_item(flashlight)
+room['cathedral'].add_item(coins)
+room['bone_pit'].add_item(dagger)
+room['cathedral'].add_item(pick)
 
 
 '''
