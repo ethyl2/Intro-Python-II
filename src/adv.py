@@ -141,19 +141,17 @@ Hint: isinstance might help you figure out if there's a LightSource among all th
 
 def light_check(room, player):
     has_light = False
-    if room.is_light == True or len([
-            x for x in room.items if isinstance(x, LightSource)]) > 0 or len([
-            x for x in player.items if isinstance(x, LightSource)]) > 0:
+    if room.is_light == True or [
+            x for x in room.items if isinstance(x, LightSource)] or [
+            x for x in player.items if isinstance(x, LightSource)]:
         has_light = True
-    '''
-    else:
-        light_sources = [
-            x for x in room.items if isinstance(x, LightSource)]
-        if len(light_sources) > 0:
-            has_light = True
-    '''
     return has_light
 
+
+"""
+Modify the get/take code to print "Good luck finding that in the dark!" 
+if the user tries to pick up an Item in the dark.
+"""
 
 inPlay = True
 while inPlay:
@@ -172,6 +170,8 @@ while inPlay:
                 x for x in indiana.current_room.items if x.name == action_split[1]]
 
             if len(matches) > 0:
+                if not light_check(indiana.current_room, indiana):
+                    print("Good luck finding that in the dark!")
                 indiana.current_room.remove_item(matches[0])
                 indiana.add_item(matches[0])
                 matches[0].on_take(indiana.name, 'has')
