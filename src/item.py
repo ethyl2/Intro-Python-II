@@ -34,10 +34,12 @@ class Item:
         return f'{self.name}, {self.description}'
 
     def on_take(self, player_name='You', verb_form='have'):
-        print(f'{player_name} {verb_form} picked up the {self.name}.')
+        print(
+            f'\033[0;33;44m {player_name} {verb_form} picked up the {self.name}.')
 
     def on_drop(self, player_name='You', verb_form='have'):
-        print(f'{player_name} {verb_form} dropped the {self.name}.')
+        print(
+            f'\033[1;37;41m {player_name} {verb_form} dropped the {self.name}.')
 
 
 class LightSource(Item):
@@ -50,5 +52,5 @@ class LightSource(Item):
         "It's not wise to drop your source of light!" if the player drops it. 
         (But still lets them drop it.)
         """
-        print("It's not wise to drop your source of light!")
+        print("\033[1;31;40m It's not wise to drop your source of light!")
         super(LightSource, self).on_drop()

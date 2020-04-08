@@ -105,7 +105,7 @@ directions = {
 
 
 def move_error(action):
-    return f"{indiana.name} can't go {directions[action]}. Make another choice."
+    return f"\033[1;31;40m {indiana.name} can't go {directions[action]}. Make another choice."
 
 
 '''
@@ -159,9 +159,9 @@ while inPlay:
         print(indiana)
         indiana.current_room.print_items()
     else:
-        print("It's pitch black!")
+        print("\033[1;36;40m It's pitch black!")
     action = input(
-        f"Choose one: go [n] north, [s] south, [e] east, [w] west, [i] show inventory, [q] quit OR type 'get [item]' OR 'drop [item]'.\n")
+        f"\033[0;35;40m Choose one: go [n] north, [s] south, [e] east, [w] west, [i] show inventory, [q] quit OR type 'get [item]' OR 'drop [item]'.\n \033[m")
 
     action_split = action.split(' ')
     if len(action_split) == 2:
@@ -171,13 +171,13 @@ while inPlay:
 
             if len(matches) > 0:
                 if not light_check(indiana.current_room, indiana):
-                    print("Good luck finding that in the dark!")
+                    print("\033[1;36;40m Good luck finding that in the dark!")
                 indiana.current_room.remove_item(matches[0])
                 indiana.add_item(matches[0])
                 matches[0].on_take(indiana.name, 'has')
             else:
                 print(
-                    f'{action_split[1]} is not found in the {indiana.current_room.name}. Try again.')
+                    f'\033[1;31;40m {action_split[1]} is not found in the {indiana.current_room.name}. Try again.')
         elif action_split[0] == 'drop':
             matches = [
                 x for x in indiana.items if x.name == action_split[1]]
@@ -187,16 +187,18 @@ while inPlay:
                 matches[0].on_drop(indiana.name, 'has')
             else:
                 print(
-                    f'{action_split[1]} is not found in the inventory of {indiana.name}. Try again.')
+                    f'\033[1;31;40m {action_split[1]} is not found in the inventory of {indiana.name}. Try again.')
 
         else:
-            print(f'{action_split[0]} is not a valid action. Try again.')
+            print(
+                f'\033[1;31;40m {action_split[0]} is not a valid action. Try again.')
     else:
 
         if action not in directions.keys():
-            print(f'{action} is an invalid choice. Try again.')
+            print(f'\033[1;31;40m {action} is an invalid choice. Try again.')
         else:
-            print(f'\n{indiana.name} wants to go {directions[action]}.')
+            print(
+                f'\033[0;33;40m \n{indiana.name} wants to go {directions[action]}.')
 
     if action == 'n':
         if indiana.current_room.n_to != '':

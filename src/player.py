@@ -17,7 +17,7 @@ class Player:
         self.items = []
 
     def __str__(self):
-        return f'{self.name} is in the {self.current_room}\n'
+        return f'\033[0;32;40m {self.name} is in the {self.current_room}\n'
 
     def add_item(self, item):
         self.items.append(item)
@@ -29,5 +29,5 @@ class Player:
         print(f'Current inventory of {self.name}:')
         index = 1
         for item in self.items:
-            print(f'\t{index}. {item.name}')
+            print(f'\033[1;36;40m \t{index}. {item.name}')
             index += 1
